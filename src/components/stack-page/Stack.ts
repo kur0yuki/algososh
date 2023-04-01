@@ -1,5 +1,5 @@
 interface IStack<T> {
-    pop():T
+    pop():void
     push(el:T):void
     clear():void
 }
@@ -13,12 +13,16 @@ export default class Stack<T> implements IStack<T> {
         this.container = []
     }
 
-    pop(): T {
-        return this.container.pop()!!;
+    pop(): void {
+        this.container.pop();
     }
 
     push(el: T): void {
         this.container.push(el)
+    }
+
+    getElements() {
+        return this.container
     }
 
 }

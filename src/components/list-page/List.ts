@@ -82,4 +82,13 @@ export default class List<T> implements IList<T> {
         return array;
     }
 
+    getElements() {
+        const array = []
+        let node: INode<T>|null =  this.head
+        while (node) {
+            if ((node.value as Object).toString() !== "") array.push(node.value)
+            node = node.next
+        }
+        return array
+    }
 }
