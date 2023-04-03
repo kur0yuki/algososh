@@ -54,6 +54,7 @@ export default class List<T> implements IList<T> {
     }
 
     removeAtIndex(idx: number): void {
+        if (idx === 0) this.head = this.head.next!!
         let prev = this.head
         for (let i=1; i<idx; i++) {
             prev = prev.next!!

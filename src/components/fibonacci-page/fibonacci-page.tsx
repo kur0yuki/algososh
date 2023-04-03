@@ -1,12 +1,16 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {ChangeEvent, useEffect, useMemo, useState} from "react";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
-import {ControlForm} from "../control-form/ControlForm";
 import {Circle} from "../ui/circle/circle";
 import {delay} from "../../utils";
 import {DELAY_IN_MS} from "../../constants/delays";
+import styles from "../string/string.module.css";
+import {Input} from "../ui/input/input";
+import {Button} from "../ui/button/button";
 
 export const FibonacciPage: React.FC = () => {
     const [num, setNum] = useState(0)
+    const [input, setInput] = useState('')
+    const [loader, setLoader] = useState(false)
     const [fibArray, setArray] = useState<Array<number>>([])
 
     const fillArray = (num: number) => {
@@ -31,20 +35,30 @@ export const FibonacciPage: React.FC = () => {
         if (num > 0) {
             console.log(fastArray)
             //fillArray(num, fastArray)
-            fillSlowArray(fastArray)
+            fillSlowArray(fastArray).then(() => {setLoader(false)})
             console.log(fibArray)
         }
     }, [num])
   return (
     <SolutionLayout title="Последовательность Фибоначчи">
         <section className={'ma'}>
-            <ControlForm onClick={input => {
-                setNum(Number.parseInt(input))
-                //console.log(fibArray)
-            }} maxNum={19} />
+            <div className={`${styles.controls} ma`}>
+                <Input
+                    placeholder="Введите текст"
+                    maxLength={19}
+                    isLimitText={true}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
+                    value={input}
+                />
+                <Button text={"Рассчитать"} isLoader={loader} onClick={()=>{
+                    setLoader(true)
+                    setNum(Number.parseInt(input)+1)
+                    //console.log(1)
+                }}/>
+            </div>
             {fibArray.length >0 &&
                 <div className={`ma row`}>
-                    {fibArray.map((letter, idx) => (<Circle  key = {idx} letter={letter.toString()} />))}
+                    {fibArray.map((letter, idx) => (<Circle  key = {idx} letter={letter.toString()} index={idx} />))}
                 </div>
             }
         </section>

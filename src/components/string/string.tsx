@@ -11,6 +11,7 @@ import {DELAY_IN_MS} from "../../constants/delays";
 export const StringComponent: React.FC = () => {
     const [state, setState] = useState<Array<string>>([])
     const [input, setInput] = useState("")
+    const [loader, setLoader] = useState(false)
     const [idx, setIdx] = useState(-1)
     const len = useMemo(() => state.length, [state])
 
@@ -41,10 +42,13 @@ export const StringComponent: React.FC = () => {
                         onChange={(e: ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
                         value={input}
                     />
-                    <Button text={"Развернуть"} onClick={() => {
+                    <Button text={"Развернуть"} isLoader={loader}
+                            onClick={async () => {
                         //console.log(Array.of(input.split('')))
+                        setLoader(true)
                         setState(input.split(""))
-                        startReverse(input.split(""), 0, input.length)
+                        await startReverse(input.split(""), 0, input.length)
+                        setLoader(false)
                     }}/>
                 </div>
 

@@ -12,12 +12,14 @@ export const bubbleSort:sortFunc = async (arrayInitial: Array<number>, setArray,
     const array = [...arrayInitial]
     for (let j = 0; j < array.length; j++) {
         for (let i = 0; i < array.length - 1 - j; i++) {
+            setIndex({i, j, idx:  array.length - 1 - j})
             await delay(DELAY_IN_MS)
-            if ((array[i] > array[i + 1]) == sortAsc) [array[i], array[i + 1]] = swap(array[i], array[i + 1])
+            if ((array[i] > array[i + 1]) === sortAsc) [array[i], array[i + 1]] = swap(array[i], array[i + 1])
             setArray(array)
-            setIndex({i,j, idx: 0})
+            //setIndex({i,j, idx: 0})
         }
     }
+    setIndex({i: array.length, j: array.length, idx:  0})
     //return array//.sort()
 }
 
@@ -31,15 +33,19 @@ export const bubbleSortStep: (arrayInitial: Array<number>, state: { i: number; j
 export const selectionSort:sortFunc = async (arrayInitial, setArray, setState, sortAsc = true) => {
     const array = [...arrayInitial]
     for (let i = 0; i < array.length; i++) {
-        let idx = 0
+        let idx = i
         for (let j = i; j < array.length; j++) {
-            setState({i, j, idx})
-            if ((array[j] < array[idx])==sortAsc) idx = j
+            setState({i, j, idx: 0})
+            if ((array[j] < array[idx])===sortAsc) idx = j
         }
-        [array[i], array[idx]] = swap(array[idx], array[i])
+        console.log(array[i], array[idx]);
+        [array[i], array[idx]] = swap(array[i], array[idx])
+        console.log(array[i], array[idx])
+        console.log(array)
         setArray(array)
         await delay(DELAY_IN_MS)
     }
+    setState({i: array.length, j: array.length, idx: 0})
     //return array
 }
 export const selectionSortStep = (arrayInitial: Array<number>, state: { i: number; j: number; idx: number }) => {

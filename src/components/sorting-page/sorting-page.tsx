@@ -1,20 +1,20 @@
 import React, {useEffect, useState} from "react";
-import { SolutionLayout } from "../ui/solution-layout/solution-layout";
+import {SolutionLayout} from "../ui/solution-layout/solution-layout";
 import {Column} from "../ui/column/column";
-import {bubbleSort, bubbleSortStep, selectionSort} from "./utils";
-import {delay} from "../../utils";
-import {DELAY_IN_MS} from "../../constants/delays";
+import {bubbleSort, selectionSort} from "./utils";
 import {Button} from "../ui/button/button";
+import {RadioInput} from "../ui/radio-input/radio-input";
+import {ElementStates} from "../../types/element-states";
 
 export const SortingPage: React.FC = () => {
   const createArray = () => [...Array(5)].map(() => Math.ceil(Math.random() * 100))
   const [array, setArray] = useState(createArray())
+  const [isAsc, setAsc] = useState(true)
   const [state, setState] = useState({
     i:0,
     j:0,
     idx: 0
   })
-  const [nextIteration, setNext] = useState(0)
   const [isInProgress, setIsInProgress] = useState(true)
   const [sortAlgorithm, setSortAlgorithm] = useState('bubbleSort')
 
@@ -33,23 +33,44 @@ export const SortingPage: React.FC = () => {
   useEffect(() => {
     if (isInProgress) {
       switch(sortAlgorithm){
-        case 'bubbleSort': bubbleSort(array, setArray, setState).finally(() => {setIsInProgress(false)})
+        case 'bubbleSort': bubbleSort(array, setArray, setState, isAsc).finally(() => {setIsInProgress(false)})
               break
-        case 'selectionSort': selectionSort(array, setArray, setState).finally(() => {setIsInProgress(false)})
+        case 'selectionSort': selectionSort(array, setArray, setState, isAsc).finally(() => {setIsInProgress(false)})
           break
       }
     }
-  }, [isInProgress])
-
+  }, [isInProgress, sortAlgorithm, isAsc])
 
   return (
     <SolutionLayout title="Сортировка массива">
-      <div className={"sort__controls"}>
-        <Button onClick={()=> {}} text={''} />
+      <div className={"row  pb-20 ma"}>
+        <RadioInput label={"Пузырек"} name={"sort"} value={"bubbleSort"}
+                    defaultChecked={sortAlgorithm === "bubbleSort"}
+                    onClick={() => {setSortAlgorithm("bubbleSort"); setIsInProgress(true)}} />
+        <RadioInput label={"Выбор"} name={"sort"} value={"selectionSort"}
+                     onClick={() => {setSortAlgorithm("selectionSort"); setIsInProgress(true)}} />
+
+        <Button onClick={()=> {setAsc(true); setIsInProgress(true)}} text={'По возрастанию'} isLoader={isInProgress} />
+        <Button onClick={()=> {setAsc(false); setIsInProgress(true)}} text={'По убыванию'} isLoader={isInProgress} />
+
+        <Button onClick={()=> {
+          setArray(createArray())
+          setIsInProgress(true)
+        }} text={'Новый массив'} isLoader={isInProgress}
+        />
       </div>
+      
+
       {array.length>0 &&
           <div className={'row'}>
-            {array.map(val => <Column index={val} key={val} />)}
+            {array.map((val, idx) => <Column index={val} key={idx}
+                                             state={
+              sortAlgorithm === 'selectionSort'? idx === state.i|| idx === state.j ? ElementStates.Changing :
+                      idx < state.i ? ElementStates.Modified: ElementStates.Default
+                  : idx === state.i || idx === state.i +1 ?  ElementStates.Changing :
+                    idx> state.idx? ElementStates.Modified: ElementStates.Default
+                                             }
+            />)}
           </div>
       }
     </SolutionLayout>
