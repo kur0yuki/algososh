@@ -39,11 +39,11 @@ export const selectionSort:sortFunc = async (arrayInitial, setArray, setState, s
             if ((array[j] < array[idx])===sortAsc) idx = j
         }
         console.log(array[i], array[idx]);
+        await delay(DELAY_IN_MS);
         [array[i], array[idx]] = swap(array[i], array[idx])
         console.log(array[i], array[idx])
         console.log(array)
         setArray(array)
-        await delay(DELAY_IN_MS)
     }
     setState({i: array.length, j: array.length, idx: 0})
     //return array
@@ -51,7 +51,6 @@ export const selectionSort:sortFunc = async (arrayInitial, setArray, setState, s
 export const selectionSortStep = (arrayInitial: Array<number>, state: { i: number; j: number; idx: number }) => {
     let {i, j, idx} = state
     const array = [...arrayInitial];
-    //if (j===i) idx = 0
     if (arrayInitial[j] < arrayInitial[idx]) idx = j
     if (++j >= arrayInitial.length) {
         //i++

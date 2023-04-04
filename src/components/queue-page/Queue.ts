@@ -23,7 +23,8 @@ export default class Queue<T> implements IQueue<T> {
 
     dequeue(): T {
         const el = this.container[this.headIdx]!!
-        this.container[this.headIdx++] = null
+        this.container[this.headIdx] = null
+        this.headIdx = (this.headIdx + 1) % QUEUE_CAPACITY
         return el
     }
 

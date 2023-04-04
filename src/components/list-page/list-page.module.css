@@ -1,0 +1,11 @@
+.controls {
+    padding: 0 144px 90px;
+}
+
+.inputs {
+    width: 250px;
+}
+
+.button {
+    flex-grow: 1;
+}

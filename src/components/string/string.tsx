@@ -42,7 +42,7 @@ export const StringComponent: React.FC = () => {
                         onChange={(e: ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
                         value={input}
                     />
-                    <Button text={"Развернуть"} isLoader={loader}
+                    <Button text={"Развернуть"} isLoader={loader} disabled={ input.length === 0 }
                             onClick={async () => {
                         //console.log(Array.of(input.split('')))
                         setLoader(true)

@@ -45,12 +45,15 @@ export const FibonacciPage: React.FC = () => {
             <div className={`${styles.controls} ma`}>
                 <Input
                     placeholder="Введите текст"
-                    maxLength={19}
+                    max={19}
+                    type={"number"}
                     isLimitText={true}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
                     value={input}
                 />
-                <Button text={"Рассчитать"} isLoader={loader} onClick={()=>{
+                <Button text={"Рассчитать"} isLoader={loader}
+                        disabled={ input.length === 0 || parseInt(input) > 19 || parseInt(input) < 0 }
+                        onClick={()=>{
                     setLoader(true)
                     setNum(Number.parseInt(input)+1)
                     //console.log(1)

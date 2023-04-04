@@ -9,6 +9,7 @@ import {ElementStates} from "../../types/element-states";
 
 export const QueuePage: React.FC = () => {
   const stackRef = useRef(new Queue<string>())
+  const [loader, setLoader] = useState(false)
   const [changing , setChanging] = useState<number|null>(null)
   const [input, setInput] = useState("")
   const [stackEls, setStackEls] = useState<(string|null)[]>(Array(7).fill(null))
@@ -19,21 +20,26 @@ export const QueuePage: React.FC = () => {
         <div className={`row ma`} >
           <Input placeholder="Введите текст"
                  maxLength={4}
+                 type={"number"}
+                 max = {9999}
                  isLimitText={true}
                  onChange={(e: ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
                  value={input}
           />
-          <Button text={"Добавить"} disabled={input.length === 0} onClick={() => {
+          <Button text={"Добавить"} isLoader={loader} disabled={input.length === 0} onClick={() => {
             stackRef.current.enqueue(input)
             setChanging(stackRef.current.tailIdx)
-            setTimeout(() => { setChanging(null)}, DELAY_IN_MS)
+            setLoader(true)
+            setTimeout(() => { setChanging(null); setLoader(false)}, DELAY_IN_MS)
             setStackEls(stackRef.current.getElements())
             console.log(stackRef.current.container)
             setInput("")
           }} />
-          <Button text={"Удалить"} onClick={() => {
+          <Button text={"Удалить"} isLoader={loader} onClick={() => {
             setChanging(stackRef.current.headIdx)
-            setTimeout(() => { stackRef.current.dequeue(); setChanging(null)}, DELAY_IN_MS)
+            setLoader(true)
+            setTimeout(() => { stackRef.current.dequeue(); setChanging(null);  setLoader(false) },
+                DELAY_IN_MS)
             // stackRef.current.dequeue()
             //setStackEls(stackRef.current.getElements())
             console.log(stackRef.current.container)

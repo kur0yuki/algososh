@@ -13,31 +13,34 @@ export const StackPage: React.FC = () => {
     const [input, setInput] = useState("")
     const [stackEls, setStackEls] = useState<string[]>([])
     const [changing , setChanging] = useState<number|null>(null)
+    const [loader, setLoader] = useState(false)
 
   return (
     <SolutionLayout title="Стек">
-      <div className={`row ma pb-10`}>
+      <div className={`row ma pb-30`}>
           <div className={`row ma`}>
               <Input placeholder="Введите текст"
                      maxLength={4}
+                     type={"number"}
+                     max = {9999}
                      isLimitText={true}
                      onChange={(e: ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
                      value={input}
               />
-              <Button text={"Добавить"} disabled={input.length === 0} onClick={() => {
+              <Button text={"Добавить"} isLoader={loader} disabled={input.length === 0} onClick={() => {
+                  setLoader(true)
                   stackRef.current.push(input)
                   setChanging(stackRef.current.getElements().length - 1)
                   setStackEls(stackRef.current.getElements())
                   console.log(stackRef.current.container)
                   setInput("")
-                  setTimeout(()=> {setChanging(null)}, DELAY_IN_MS)
+                  setTimeout(()=> {setChanging(null);  setLoader(false)}, DELAY_IN_MS)
               }} />
-              <Button text={"Удалить"} disabled={stackEls?.length === 0} onClick={() => {
+              <Button text={"Удалить"} isLoader={loader} disabled={stackEls?.length === 0} onClick={() => {
+                  setLoader(true)
                   setChanging(stackEls.length-1)
-                  setTimeout(() => {stackRef.current.pop(); setChanging(null)}, DELAY_IN_MS)
-                  // stackRef.current.pop()
-                  //setStackEls(stackRef.current.getElements())
-                  //console.log(stackRef.current.container)
+                  setTimeout(() => {stackRef.current.pop(); setChanging(null);  setLoader(false)},
+                      DELAY_IN_MS)
               }} />
           </div>
           <Button text={"Очистить"} disabled={stackEls?.length === 0} onClick={() => {
