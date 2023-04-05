@@ -20,8 +20,6 @@ export const QueuePage: React.FC = () => {
         <div className={`row ma`} >
           <Input placeholder="Введите текст"
                  maxLength={4}
-                 type={"number"}
-                 max = {9999}
                  isLimitText={true}
                  onChange={(e: ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
                  value={input}
