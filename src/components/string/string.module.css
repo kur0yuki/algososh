@@ -1,0 +1,17 @@
+.controls {
+    display: flex;
+    flex-direction: row;
+    width: 525px;
+    gap: 12px;
+    margin-bottom: 150px;
+}
+
+.centred {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.stringRow {
+    display: flex;
+    gap: 16px;
+}
