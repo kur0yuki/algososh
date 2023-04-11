@@ -2,6 +2,7 @@
 
 import {BASE_URL, LIST} from "./constants";
 import {ElementStates} from "../../src/types/element-states";
+import {CIRCLE_CIRCLE, CIRCLE_CONTENT, CIRCLE_SMALL} from "./selectors";
 
 describe('Stack tests', function () {
     beforeEach("Can access", () => {
@@ -28,21 +29,21 @@ describe('Stack tests', function () {
         cy.get('[data-cy="elem"]').type("3")
         cy.get('@button').click()
 
-        cy.get('div[class*="circle_content"]').as('circles')
+        cy.get(CIRCLE_CONTENT).as('circles')
 
-        cy.get('@circles').find('div[class*="circle_small"]').should($el =>
+        cy.get('@circles').find(CIRCLE_SMALL).should($el =>
             expect($el[0].className).to.match(new RegExp(`${ElementStates.Changing}`)))
             .should('have.text', '3')
         cy.wait(1000)
         cy.get('@circles').first()
-            .find('div[class*="circle_circle"]')
+            .find(CIRCLE_CIRCLE)
             .should($el => expect($el[0].className).to.match(new RegExp(`${ElementStates.Default}`)))
             .should('have.text', '3')
         cy.get('@circles').first()
             .find('div[class*="circle_head"]')
             .should('have.text', 'head')
 
-        cy.get('div[class*="circle_circle"]').should('have.length', 2)
+        cy.get(CIRCLE_CIRCLE).should('have.length', 2)
     })
 
     it('Element is added at index', () => {
@@ -60,22 +61,22 @@ describe('Stack tests', function () {
         cy.get('[data-cy="index"]').type("1")
         cy.get('@buttonIdx').click()
 
-        cy.get('div[class*="circle_content"]').as('circles')
+        cy.get(CIRCLE_CONTENT).as('circles')
 
-        cy.get('div[class*="circle_small"]').should($el =>
+        cy.get(CIRCLE_SMALL).should($el =>
             expect($el[0].className).to.match(new RegExp(`${ElementStates.Changing}`)))
             .should('have.text', '1')
-        cy.get('@circles').eq(1).find('div[class*="circle_small"]')
+        cy.get('@circles').eq(1).find(CIRCLE_SMALL)
             .should($el =>
             expect($el[0].className).to.match(new RegExp(`${ElementStates.Changing}`)))
             .should('have.text', '1')
-        cy.get('@circles').eq(1).find('div[class*="circle_circle"]')
+        cy.get('@circles').eq(1).find(CIRCLE_CIRCLE)
             .should($el =>
                 expect($el[0].className).to.match(new RegExp(`${ElementStates.Default}`)))
             .should('have.text', '1')
 
 
-        cy.get('div[class*="circle_circle"]').should('have.length', 4)
+        cy.get(CIRCLE_CIRCLE).should('have.length', 4)
     })
 
     it('Element is added at tail', () => {
@@ -83,21 +84,21 @@ describe('Stack tests', function () {
         cy.get('[data-cy="elem"]').type("3")
         cy.get('@button').click()
 
-        cy.get('div[class*="circle_content"]').as('circles')
+        cy.get(CIRCLE_CONTENT).as('circles')
 
-        cy.get('@circles').last().find('div[class*="circle_small"]').should($el =>
+        cy.get('@circles').last().find(CIRCLE_SMALL).should($el =>
             expect($el[0].className).to.match(new RegExp(`${ElementStates.Changing}`)))
             .should('have.text', '3')
         cy.wait(1000)
         cy.get('@circles').last()
-            .find('div[class*="circle_circle"]')
+            .find(CIRCLE_CIRCLE)
             .should($el => expect($el[0].className).to.match(new RegExp(`${ElementStates.Default}`)))
             .should('have.text', '3')
         cy.get('@circles').last()
             .find('div[class*="circle_tail"]')
             .should('have.text', 'tail')
 
-        cy.get('div[class*="circle_circle"]').should('have.length', 2)
+        cy.get(CIRCLE_CIRCLE).should('have.length', 2)
     })
 
     it('Removes element at head', () => {
@@ -107,19 +108,19 @@ describe('Stack tests', function () {
         cy.get('@button').click()
         cy.wait(1000)
 
-        cy.get('div[class*="circle_content"]').as('circles')
+        cy.get(CIRCLE_CONTENT).as('circles')
         cy.get('@circles').should('have.length', 2)
 
         cy.get('@removeButton').click()
 
-        cy.get('@circles').first().find('div[class*="circle_small"]')
+        cy.get('@circles').first().find(CIRCLE_SMALL)
             .should('have.text', '0')
             .should($el => expect($el[0].className).to.match(new RegExp(`${ElementStates.Changing}`)))
 
         cy.wait(1000)
 
-        cy.get('div[class*="circle_circle"]').first().should('have.text', '3')
-        cy.get('div[class*="circle_circle"]').should('have.length', 1)
+        cy.get(CIRCLE_CIRCLE).first().should('have.text', '3')
+        cy.get(CIRCLE_CIRCLE).should('have.length', 1)
     })
 
     it('Removes element at index', () => {
@@ -135,16 +136,16 @@ describe('Stack tests', function () {
         cy.contains("Удалить по индексу").as('buttonIdx')
         cy.get('[data-cy="index"]').type("1")
 
-        cy.get('div[class*="circle_circle"]').should('have.length', 3)
+        cy.get(CIRCLE_CIRCLE).should('have.length', 3)
         cy.get('@buttonIdx').click()
 
-        cy.get('div[class*="circle_circle"]').eq(1)
+        cy.get(CIRCLE_CIRCLE).eq(1)
             //.should($el => expect($el[0].className).to.match(new RegExp(`${ElementStates.Modified}`)))
             .should('not.have.text')
-        cy.get('div[class*="circle_content"]').eq(1)
-            .find('div[class*="circle_small"]')
+        cy.get(CIRCLE_CONTENT).eq(1)
+            .find(CIRCLE_SMALL)
             .should('have.text', '1')
-        cy.get('div[class*="circle_circle"]').should('have.length', 2)
+        cy.get(CIRCLE_CIRCLE).should('have.length', 2)
     })
 
     it('Removes element at tail', () => {
@@ -154,21 +155,21 @@ describe('Stack tests', function () {
         cy.get('@button').click()
         cy.wait(1000)
 
-        cy.get('div[class*="circle_content"]').as('circles')
+        cy.get(CIRCLE_CONTENT).as('circles')
         cy.get('@circles').should('have.length', 2)
 
         cy.get('@removeButton').click()
 
         cy.get('@circles').eq(1)
-            .find('div[class*="circle_small"]')
+            .find(CIRCLE_SMALL)
             .should('have.text', '3')
             .should($el => expect($el[0].className).to.match(new RegExp(`${ElementStates.Changing}`)))
 
         cy.wait(1000)
 
-        cy.get('div[class*="circle_circle"]').last().should('have.text', '0')
-        cy.get('div[class*="circle_circle"]').should('have.length', 1)
-        cy.get('div[class*="circle_small"]').should('have.length', 0)
+        cy.get(CIRCLE_CIRCLE).last().should('have.text', '0')
+        cy.get(CIRCLE_CIRCLE).should('have.length', 1)
+        cy.get(CIRCLE_SMALL).should('have.length', 0)
     })
 
 })

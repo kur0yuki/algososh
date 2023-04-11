@@ -2,6 +2,7 @@
 
 import {BASE_URL, STRING} from "./constants";
 import {ElementStates} from "../../src/types/element-states";
+import {CIRCLE_CIRCLE} from "./selectors";
 
 describe('String tests', function () {
     beforeEach("Can access", () => {
@@ -21,7 +22,7 @@ describe('String tests', function () {
         cy.get('@button').should('not.be.disabled')
         cy.get('@button').click()
 
-        cy.get('div[class*="circle_circle"]').as('circles')
+        cy.get(CIRCLE_CIRCLE).as('circles')
 
         cy.get('@circles').each(($el, idx) => {
             idx == 0 || idx == 4 ? cy.wrap($el).should(($el) =>

@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import {BASE_URL, FIBO} from "./constants";
+import {CIRCLE_CIRCLE} from "./selectors";
 
 describe('Fibonacci tests', function () {
     beforeEach("Can access", () => {
@@ -20,7 +21,7 @@ describe('Fibonacci tests', function () {
 
         cy.wait(8000)
 
-        cy.get('div[class*="circle_circle"]').as('circles')
+        cy.get(CIRCLE_CIRCLE).as('circles')
         cy.get('@circles').each(($el, idx) => {
             //cy.wrap($el).contains('p[class*="circle_letter"]').as(`letter_${idx}`)
             switch(idx) {

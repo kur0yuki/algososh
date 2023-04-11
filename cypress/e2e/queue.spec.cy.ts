@@ -2,6 +2,7 @@
 
 import {BASE_URL, QUEUE} from "./constants";
 import {ElementStates} from "../../src/types/element-states";
+import {CIRCLE_CIRCLE, CIRCLE_CONTENT} from "./selectors";
 
 describe('Queue tests', function () {
     beforeEach("Can access", () => {
@@ -19,13 +20,13 @@ describe('Queue tests', function () {
         cy.get('input').type("3")
         cy.get('@button').click()
 
-        cy.get('div[class*="circle_content"]').as('circles')
+        cy.get(CIRCLE_CONTENT).as('circles')
 
-        cy.get('@circles').contains('tail').closest('div[class*="circle_content"]')
-            .find('div[class*="circle_circle"]')
+        cy.get('@circles').contains('tail').closest(CIRCLE_CONTENT)
+            .find(CIRCLE_CIRCLE)
             .should($el => expect($el[0].className).to.match(new RegExp(`${ElementStates.Changing}`)))
 
-        cy.get('@circles').contains('tail').closest('div[class*="circle_content"]')
+        cy.get('@circles').contains('tail').closest(CIRCLE_CONTENT)
             .should('contain.text', 3)
     })
 
@@ -41,11 +42,11 @@ describe('Queue tests', function () {
 
         cy.get('@removeButton').click()
 
-        cy.get('div[class*="circle_content"]').as('circles')
-        cy.get('@circles').contains('head').closest('div[class*="circle_content"]')
-            .find('div[class*="circle_circle"]')
+        cy.get(CIRCLE_CONTENT).as('circles')
+        cy.get('@circles').contains('head').closest(CIRCLE_CONTENT)
+            .find(CIRCLE_CIRCLE)
             .should($el => expect($el[0].className).to.match(new RegExp(`${ElementStates.Changing}`)))
-        cy.get('@circles').contains('head').closest('div[class*="circle_content"]')
+        cy.get('@circles').contains('head').closest(CIRCLE_CONTENT)
             .should('contain.text', 5)
     })
 
