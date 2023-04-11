@@ -1,10 +1,10 @@
 /// <reference types="cypress" />
 
-import {BASE_URL, FIBO, LIST, QUEUE, SORT, STACK, STRING} from "./constants";
+import {FIBO, LIST, QUEUE, SORT, STACK, STRING} from "./constants";
 
 describe('All routes are available', function() {
     beforeEach(() => {
-        cy.visit(BASE_URL);
+        cy.visit('');
     })
     it('String should be available on /recursion', function() {
         cy.get(`a[href="/${STRING}"]`).click()

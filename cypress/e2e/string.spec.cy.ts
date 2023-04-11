@@ -1,12 +1,12 @@
 /// <reference types="cypress" />
 
-import {BASE_URL, STRING} from "./constants";
+import {STRING} from "./constants";
 import {ElementStates} from "../../src/types/element-states";
 import {CIRCLE_CIRCLE} from "./selectors";
 
 describe('String tests', function () {
     beforeEach("Can access", () => {
-        cy.visit(`${BASE_URL}${STRING}`);
+        cy.visit(STRING);
     })
     it("Button is disabled when empty", () => {
         cy.contains("Развернуть").as('button')

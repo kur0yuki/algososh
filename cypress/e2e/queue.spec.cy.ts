@@ -1,12 +1,12 @@
 /// <reference types="cypress" />
 
-import {BASE_URL, QUEUE} from "./constants";
+import {QUEUE} from "./constants";
 import {ElementStates} from "../../src/types/element-states";
 import {CIRCLE_CIRCLE, CIRCLE_CONTENT} from "./selectors";
 
 describe('Queue tests', function () {
     beforeEach("Can access", () => {
-        cy.visit(`${BASE_URL}${QUEUE}`);
+        cy.visit(QUEUE);
     })
     it("Button is disabled when empty", () => {
         cy.contains("Добавить").as('button')

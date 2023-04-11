@@ -1,12 +1,12 @@
 /// <reference types="cypress" />
 
-import {BASE_URL, STACK} from "./constants";
+import {STACK} from "./constants";
 import {ElementStates} from "../../src/types/element-states";
 import {CIRCLE_CIRCLE} from "./selectors";
 
 describe('Stack tests', function () {
     beforeEach("Can access", () => {
-        cy.visit(`${BASE_URL}${STACK}`);
+        cy.visit(STACK);
     })
     it("Button is disabled when empty", () => {
         cy.contains("Добавить").as('button')

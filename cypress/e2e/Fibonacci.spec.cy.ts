@@ -1,11 +1,11 @@
 /// <reference types="cypress" />
 
-import {BASE_URL, FIBO} from "./constants";
+import {FIBO} from "./constants";
 import {CIRCLE_CIRCLE} from "./selectors";
 
 describe('Fibonacci tests', function () {
     beforeEach("Can access", () => {
-        cy.visit(`${BASE_URL}${FIBO}`);
+        cy.visit(FIBO);
     })
     it("Button is disabled when empty", () => {
         cy.contains("Рассчитать").as('button')

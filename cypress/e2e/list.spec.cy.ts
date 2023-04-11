@@ -1,12 +1,12 @@
 /// <reference types="cypress" />
 
-import {BASE_URL, LIST} from "./constants";
+import {LIST} from "./constants";
 import {ElementStates} from "../../src/types/element-states";
 import {CIRCLE_CIRCLE, CIRCLE_CONTENT, CIRCLE_SMALL} from "./selectors";
 
 describe('Stack tests', function () {
     beforeEach("Can access", () => {
-        cy.visit(`${BASE_URL}${LIST}`);
+        cy.visit(LIST);
     })
 
     it('Default list is created', () => {
