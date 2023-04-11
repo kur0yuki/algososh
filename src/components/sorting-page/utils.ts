@@ -5,22 +5,23 @@ type sortFunc = (
     array: Array<number>,
     f1: (array: Array<number>) => void,
     f2: (state:{ i: number, j: number, idx: number}) => void,
-    sortAsc?: boolean
-)=> Promise<void>
+    sortAsc?: boolean,
+    ms?: number
+)=> Promise<void|number[]>
 
-export const bubbleSort:sortFunc = async (arrayInitial: Array<number>, setArray, setIndex, sortAsc=true) => {
+export const bubbleSort:sortFunc = async (arrayInitial: Array<number>, setArray, setIndex, sortAsc=true, ms=DELAY_IN_MS) => {
     const array = [...arrayInitial]
     for (let j = 0; j < array.length; j++) {
         for (let i = 0; i < array.length - 1 - j; i++) {
             setIndex({i, j, idx:  array.length - 1 - j})
-            await delay(DELAY_IN_MS)
+            await delay(ms)
             if ((array[i] > array[i + 1]) === sortAsc) [array[i], array[i + 1]] = swap(array[i], array[i + 1])
             setArray(array)
             //setIndex({i,j, idx: 0})
         }
     }
     setIndex({i: array.length, j: array.length, idx:  0})
-    //return array//.sort()
+    return array//.sort()
 }
 
 export const bubbleSortStep: (arrayInitial: Array<number>, state: { i: number; j: number }) => { tmpArray: Array<number>; i: number; j: number } = (arrayInitial, state) => {
@@ -30,7 +31,8 @@ export const bubbleSortStep: (arrayInitial: Array<number>, state: { i: number; j
     return {tmpArray, i, j}
 }
 
-export const selectionSort:sortFunc = async (arrayInitial, setArray, setState, sortAsc = true) => {
+export const selectionSort:sortFunc = async (arrayInitial, setArray, setState, sortAsc = true, ms?: number) => {
+    ms = ms === undefined? DELAY_IN_MS: 0
     const array = [...arrayInitial]
     for (let i = 0; i < array.length; i++) {
         let idx = i
@@ -39,14 +41,14 @@ export const selectionSort:sortFunc = async (arrayInitial, setArray, setState, s
             if ((array[j] < array[idx])===sortAsc) idx = j
         }
         console.log(array[i], array[idx]);
-        await delay(DELAY_IN_MS);
+        await delay(ms);
         [array[i], array[idx]] = swap(array[i], array[idx])
         console.log(array[i], array[idx])
         console.log(array)
         setArray(array)
     }
     setState({i: array.length, j: array.length, idx: 0})
-    //return array
+    return array
 }
 export const selectionSortStep = (arrayInitial: Array<number>, state: { i: number; j: number; idx: number }) => {
     let {i, j, idx} = state

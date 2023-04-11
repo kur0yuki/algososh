@@ -1,0 +1,9 @@
+const HOST = "localhost";
+const PORT = 3000;
+export const BASE_URL = `http://${HOST}:${PORT}/`
+export const STRING = 'recursion'
+export const FIBO = 'fibonacci'
+export const SORT = 'sorting'
+export const LIST = 'list'
+export const QUEUE = 'queue'
+export const STACK = 'stack'
