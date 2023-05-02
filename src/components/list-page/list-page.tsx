@@ -33,6 +33,7 @@ export const ListPage: React.FC = () => {
                            value={input}
                            width={204}
                            extraClass={styles.inputs}
+                           data-cy={"elem"}
                     />
                     <Button text={"Добавить в head"} isLoader={loading} extraClass={styles.button}
                             disabled={input.length === 0} onClick={() => {
@@ -108,6 +109,7 @@ export const ListPage: React.FC = () => {
                            type={"number"}
                            width={204}
                            extraClass={styles.inputs}
+                           data-cy={"index"}
                     />
                     <Button text={"Добавить по индексу"} extraClass={styles.button} isLoader={loading}
                             disabled={idxInput === -1 || input.length === 0 || idxInput >= stackRef.current.getElements().length}
